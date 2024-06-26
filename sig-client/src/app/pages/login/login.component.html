@@ -1,1 +1,31 @@
-<p>login works!</p>
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card card-login">
+        <form (ngSubmit)="onSubmit()">
+          <div class="card-header card-header-primary text-center">
+            <h4 class="card-title">Connexion</h4>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="username">Nom d'utilisateur</label>
+              <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Mot de passe</label>
+              <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required>
+            </div>
+            <div class="form-group" *ngIf="mfaEnabled">
+              <label for="mfa">Code MFA</label>
+              <input type="text" class="form-control" id="mfa" [(ngModel)]="mfaCode" name="mfa" required>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+            <a href="#" class="btn btn-link">Mot de passe oublié ?</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
