@@ -5,9 +5,12 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -18,17 +21,32 @@ public class User implements UserDetails {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @Column(unique = true, nullable = false)
   private String username;
+
+  @Column(nullable = false)
   private String email;
+
+  @Column(nullable = false)
   private String hash;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private boolean active;
 
-  @Override
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+          name = "user_roles",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "role_id")
+  )
+  private Set<Role> roles;
+
+
+
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of();
+    return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
   }
+
 
   @Override
   public String getPassword() {
