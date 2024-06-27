@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import sn.esp.dgi.sig_vhe_backend.service.JwtUserDetailsService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @CrossOrigin
 public class AuthController {
 

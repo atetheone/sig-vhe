@@ -32,8 +32,7 @@ public class SecurityConfig {
                     requestMatchers("/api/patients/**").authenticated().
                     requestMatchers("/api/admin/**").hasRole("ADMIN").
                     requestMatchers("/api/admin/all-users").permitAll().
-                    requestMatchers("/api/register").permitAll().
-                    anyRequest().authenticated())
+                    requestMatchers("/api/register").permitAll())
             .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)) // if any exception came
             .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // nothing to save on server
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
